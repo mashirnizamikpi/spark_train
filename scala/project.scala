@@ -22,13 +22,14 @@ val fail=spark.sql("Select count(case y when 'no' then 1 end)/count(*)*100 as fa
 fail.writeStream.outputMode("update").option("truncate",false).format("console").start().aw aitTermination(10)
 
 print("Giving the max min and avg age :")
-val age="""select max(age),min(age),avg(age) from bankdata""" val bage = spark.sql(age)
+val age="""select max(age),min(age),avg(age) from bankdata""" 
+val bage = spark.sql(age)
 bage.writeStream.outputMode("update").option("truncate",false).format("console").start().a waitTermination(10)
 
 
 print("quality of customers by checking average balance, median balance of customers :") 
 val avg="""select percentile_approx(balance, 0.5),avg(balance) from bankdata"""
-val customer= spark.sql(avg) customer.writeStream.outputMode("update").option("truncate",false).format("console").star t().awaitTermination(10)
+val customer= spark.sql(avg) customer.writeStream.outputMode("update").option("truncate",false).format("console").start().awaitTermination(10)
 
 print("age matters in marketing subscription for deposit :")
 val q5 ="""select age,y as subscription_status from bankdata group by age,y """ 
@@ -40,7 +41,7 @@ val status = spark.sql(q6) status.writeStream.outputMode("update").option("trunc
 
 print(" age and marital status together mattered for subscription to deposit scheme:")
 val q7 ="""select age,marital,y as subscription_status from bankdata group by marital,y,age""" 
-val together= spark.sql(q7) together.writeStream.outputMode("update").option("truncate",false).format("console").start ().awaitTermination(10)
+val together= spark.sql(q7) together.writeStream.outputMode("update").option("truncate",false).format("console").start().awaitTermination(10)
 
 }
 }
